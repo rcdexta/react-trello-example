@@ -1,9 +1,22 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {Board} from 'react-trello'
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { Board } from "react-trello";
 
-const data = require('./data.json')
+const data = require("./data.json");
+
+const handleDragStart = (cardId, laneId) => {
+  console.log("drag started");
+  console.log(`cardId: ${cardId}`);
+  console.log(`laneId: ${laneId}`);
+};
+
+const handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
+  console.log("drag ended");
+  console.log(`cardId: ${cardId}`);
+  console.log(`sourceLaneId: ${sourceLaneId}`);
+  console.log(`targetLaneId: ${targetLaneId}`);
+};
 
 class App extends Component {
   render() {
@@ -14,7 +27,9 @@ class App extends Component {
           <h2>React Trello Demo</h2>
         </div>
         <p className="App-intro">
-          <Board data={data} />
+          <Board data={data} draggable
+            handleDragStart={handleDragStart}
+            handleDragEnd={handleDragEnd}/>
         </p>
       </div>
     );
