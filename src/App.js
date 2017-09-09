@@ -18,18 +18,38 @@ const handleDragEnd = (cardId, sourceLaneId, targetLaneId) => {
 }
 
 class App extends Component {
+    state = {boardData: {lanes: []}}
 
     setEventBus = eventBus => {
         this.setState({eventBus})
     }
 
+    async componentWillMount() {
+        const response = await this.getBoard()
+        this.setState({boardData: response})
+    }
+
+    getBoard() {
+        return new Promise(resolve => {
+            resolve(data)
+        })
+    }
+
     completeCard = () => {
-      this.state.eventBus.publish({type: 'ADD_CARD', laneId: 'COMPLETED', card: {id: "Milk", title: "Buy Milk", label: "15 mins", description: "Use Headspace app"}})
-      this.state.eventBus.publish({type: 'REMOVE_CARD', laneId: 'PLANNED', cardId: "Milk"})
+        this.state.eventBus.publish({
+            type: 'ADD_CARD',
+            laneId: 'COMPLETED',
+            card: {id: 'Milk', title: 'Buy Milk', label: '15 mins', description: 'Use Headspace app'}
+        })
+        this.state.eventBus.publish({type: 'REMOVE_CARD', laneId: 'PLANNED', cardId: 'Milk'})
     }
 
     addCard = () => {
-      this.state.eventBus.publish({type: 'ADD_CARD', laneId: 'BLOCKED', card: {id: "Ec2Error", title: "EC2 Instance Down", label: "30 mins", description: "Main EC2 instance down"}})
+        this.state.eventBus.publish({
+            type: 'ADD_CARD',
+            laneId: 'BLOCKED',
+            card: {id: 'Ec2Error', title: 'EC2 Instance Down', label: '30 mins', description: 'Main EC2 instance down'}
+        })
     }
 
     render() {
@@ -46,7 +66,7 @@ class App extends Component {
                         Add Blocked
                     </button>
                     <Board
-                        data={data}
+                        data={this.state.boardData}
                         draggable
                         eventBusHandle={this.setEventBus}
                         handleDragStart={handleDragStart}
