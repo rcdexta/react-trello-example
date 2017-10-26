@@ -52,6 +52,11 @@ class App extends Component {
         })
     }
 
+    shouldReceiveNewData = nextData => {
+        console.log('New card has been added')
+        console.log(nextData)
+    }
+
     render() {
         return (
             <div className="App">
@@ -68,6 +73,7 @@ class App extends Component {
                     <Board
                         data={this.state.boardData}
                         draggable
+                        onDataChange={this.shouldReceiveNewData}
                         eventBusHandle={this.setEventBus}
                         handleDragStart={handleDragStart}
                         handleDragEnd={handleDragEnd}
