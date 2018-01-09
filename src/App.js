@@ -57,6 +57,11 @@ class App extends Component {
         console.log(nextData)
     }
 
+	handleCardAdd = (card, laneId) => {
+		console.log(`New card added to lane ${laneId}`)
+		console.dir(card)
+	}
+
     render() {
         return (
             <div className="App">
@@ -71,6 +76,8 @@ class App extends Component {
                         Add Blocked
                     </button>
                     <Board
+                        editable
+												onCardAdd={this.handleCardAdd}
                         data={this.state.boardData}
                         draggable
                         onDataChange={this.shouldReceiveNewData}
